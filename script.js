@@ -91,3 +91,15 @@ function copyText() {
     alert("Teks berhasil dicopy ke clipboard!");
   });
 }
+
+const toggleBtn = document.getElementById("mode-toggle");
+    const body = document.body;
+
+    toggleBtn.addEventListener("click", () => {
+      body.classList.toggle("dark-mode");
+      if (body.classList.contains("dark-mode")) {
+        toggleBtn.textContent = "☀️ Light";
+      } else {
+        toggleBtn.textContent = "🌙 Dark";
+      }
+    });
