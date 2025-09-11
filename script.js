@@ -61,7 +61,7 @@ function generate() {
     }
   }
 
-  let template = `📢*JARKOM*📢
+  let template = `📢 *JARKOM* 📢
 
 _Assalamu'alaikum Warahmatullahi Wabarakatuh._
 Selamat ${salam} semuanya.
