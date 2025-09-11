@@ -45,6 +45,43 @@
       margin-top: 20px;
       white-space: pre-wrap;
     }
+    #mode-toggle {
+      position: fixed;
+      top: 15px;
+      right: 15px;
+      padding: 8px 12px;
+      font-size: 14px;
+      border-radius: 20px;
+      cursor: pointer;
+      border: none;
+      background: #333;
+      color: white;
+      transition: 0.3s;
+    }
+    /* Dark mode */
+    .dark-mode {
+      background: #121212;
+      color: white;
+      border-color: #444;
+    }
+    .dark-mode input,
+    .dark-mode select {
+      background: #1e1e1e;
+      color: white;
+      border: 1px solid #555;
+    }
+    .dark-mode pre {
+      background: #1e1e1e;
+      color: #ddd;
+    }
+    .dark-mode button {
+      background: #007bff;
+      color: white;
+    }
+    .dark-mode #mode-toggle {
+      background: #ddd;
+      color: black;
+    }
   </style>
 </head>
 <body>
@@ -63,7 +100,7 @@
   <input type="text" id="waktu" value="15.00 s/d selesai">
 
   <label>Tempat</label>
-  <input type="text" id="tempat" value="Masjid Al-Falah">
+  <input type="text" id="tempat" value="Masjid Miftahul Jannah">
 
   <label>Kegiatan</label>
   <select id="kegiatan" onchange="cekKegiatan()">
@@ -89,5 +126,6 @@
   <script src="script.js"></script>
 </body>
 </html>
+
 
 
