@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <title>Template Jarkom</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      max-width: 600px;
+      margin: 20px auto;
+      padding: 20px;
+      border: 1px solid #ddd;
+      border-radius: 10px;
+      background: #f9f9f9;
+    }
+    label {
+      font-weight: bold;
+      display: block;
+      margin-top: 10px;
+    }
+    input, select {
+      width: 100%;
+      padding: 8px;
+      margin-top: 4px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+    }
+    button {
+      margin-top: 15px;
+      padding: 10px 15px;
+      border: none;
+      border-radius: 5px;
+      background: #007bff;
+      color: white;
+      font-size: 16px;
+      cursor: pointer;
+    }
+    button:hover {
+      background: #0056b3;
+    }
+    pre {
+      background: white;
+      padding: 15px;
+      border-radius: 10px;
+      margin-top: 20px;
+      white-space: pre-wrap;
+    }
+  </style>
+</head>
+<body>
+  <h2>📢 Template Jarkom 📢</h2>
+  
+  <label>Waktu salam (pagi/siang/malam)</label>
+  <input type="text" id="salam" value="pagi">
+
+  <label>Keterangan hari (besok/hari ini)</label>
+  <input type="text" id="keterangan" value="besok">
+
+  <label>Hari & Tanggal</label>
+  <input type="text" id="tanggal" placeholder="Senin, 12 September 2025">
+
+  <label>Waktu</label>
+  <input type="text" id="waktu" placeholder="08.00 WIB">
+
+  <label>Tempat</label>
+  <input type="text" id="tempat" placeholder="Masjid Al-Falah">
+
+  <label>Kegiatan</label>
+  <select id="kegiatan" onchange="cekKegiatan()">
+    <option value="Ngabar">Ngabar</option>
+    <option value="Mentoring Ikhwan bersama Kak Arya">Mentoring Ikhwan bersama Kak Arya</option>
+    <option value="Mentoring Akhwat bersama Teh Astrid">Mentoring Akhwat bersama Teh Astrid</option>
+    <option value="custom">Custom</option>
+  </select>
+  <input type="text" id="kegiatanCustom" placeholder="Tulis kegiatan sendiri" style="display:none; margin-top:5px;">
+
+  <div id="catatan-container">
+    <label>Catatan 1</label>
+    <input type="text" class="catatan">
+  </div>
+  <button type="button" onclick="tambahCatatan()">+ Tambah Catatan</button>
+
+  <br>
+  <button onclick="generate()">Buat Jarkom</button>
+
+  <pre id="output"></pre>
+  <button id="copyBtn" style="display:none;" onclick="copyText()">Copy ke Clipboard</button>
+
+  <script>
+    let catatanCount = 1;
+
+    function tambahCatatan() {
+      catatanCount++;
+      const container = document.getElementById("catatan-container");
+      const label = document.createElement("label");
+      label.textContent = "Catatan " + catatanCount;
+      const input = document.createElement("input");
+      input.type = "text";
+      input.className = "catatan";
+      container.appendChild(label);
+      container.appendChild(input);
+    }
+
+    function cekKegiatan() {
+      const select = document.getElementById("kegiatan");
+      const custom = document.getElementById("kegiatanCustom");
+      if (select.value === "custom") {
+        custom.style.display = "block";
+      } else {
+        custom.style.display = "none";
+      }
+    }
+
+    function getKegiatan() {
+      const select = document.getElementById("kegiatan");
+      const custom = document.getElementById("kegiatanCustom");
+      return select.value === "custom" ? custom.value : select.value;
+    }
+
+    function generate() {
+      let salam = document.getElementById("salam").value;
+      let keterangan = document.getElementById("keterangan").value;
+      let tanggal = document.getElementById("tanggal").value;
+      let waktu = document.getElementById("waktu").value;
+      let tempat = document.getElementById("tempat").value;
+      let kegiatan = getKegiatan();
+      let catInputs = document.getElementsByClassName("catatan");
+
+      let catatanList = "";
+      for (let i = 0; i < catInputs.length; i++) {
+        if (catInputs[i].value.trim() !== "") {
+          catatanList += `- ${catInputs[i].value}\n`;
+        }
+      }
+
+      let template = `📢*JARKOM*📢
+
+_Assalamu'alaikum Warahmatullahi Wabarakatuh._
+Selamat ${salam} semuanya.
+
+Diberitahukan untuk seluruh anggota ROHIS/IRMA Miftahul Jannah, bahwa *${keterangan}*, yakni:
+
+📆 Hari/tanggal : ${tanggal}
+⏰ Waktu : ${waktu}
+📍 Tempat : ${tempat}
+
+akan diadakan *${kegiatan}.*
+
+🗒 Notes :
+${catatanList}
+
+Terima kasih atas perhatiannya 👋🏻
+
+_Wassalamualaikum Warahmatullahi Wabarakatuh._`;
+
+      document.getElementById("output").textContent = template;
+      document.getElementById("copyBtn").style.display = "inline-block";
+    }
+
+    function copyText() {
+      const text = document.getElementById("output").textContent;
+      navigator.clipboard.writeText(text).then(() => {
+        alert("Teks berhasil dicopy ke clipboard!");
+      });
+    }
+  </script>
+</body>
+</html>
