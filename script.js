@@ -103,3 +103,68 @@ const toggleBtn = document.getElementById("mode-toggle");
         toggleBtn.textContent = "🌙 Dark";
       }
     });
+
+const catatanContainer = document.getElementById('catatan-container');
+    let catatanCount = 0; // To keep track of the number of notes
+
+    // Function to add a new note field
+    function tambahCatatan(defaultValue = '') {
+        catatanCount++;
+        
+        const newCatatanDiv = document.createElement('div');
+        newCatatanDiv.id = `catatan-group-${catatanCount}`;
+        newCatatanDiv.style.marginTop = '10px';
+
+        const newLabel = document.createElement('label');
+        newLabel.textContent = `Catatan ${catatanCount}`;
+
+        const newInput = document.createElement('input');
+        newInput.type = 'text';
+        newInput.className = 'catatan';
+        newInput.value = defaultValue; // Set the default value if provided
+
+        newCatatanDiv.appendChild(newLabel);
+        newCatatanDiv.appendChild(newInput);
+        catatanContainer.appendChild(newCatatanDiv);
+    }
+    
+    // Function to handle the logic when the dropdown selection changes
+    function cekKegiatan() {
+        const kegiatanSelect = document.getElementById('kegiatan');
+        const customInput = document.getElementById('kegiatanCustom');
+        const selectedValue = kegiatanSelect.value;
+        
+        // Handle the visibility of the custom input field
+        if (selectedValue === 'custom') {
+            customInput.style.display = 'block';
+        } else {
+            customInput.style.display = 'none';
+        }
+        
+        // Reset the notes for a clean slate on every change
+        catatanContainer.innerHTML = '';
+        catatanCount = 0;
+        
+        // --- CORE LOGIC ---
+        if (selectedValue === 'Mentoring Ikhwan bersama Kak Arya') {
+            // Add the first note with a predefined value
+            tambahCatatan("Jangan lupa bawa catatan dan alat tulis");
+            
+            // Add a second, blank note
+            tambahCatatan();
+        } 
+        // Example for another option
+        else if (selectedValue === 'Mentoring Akhwat bersama Teh Astrid') {
+            // Add a predefined note for this option
+            tambahCatatan("Diharapkan datang tepat waktu");
+        }
+        else {
+            // For any other option (like Ngabar or Custom), just add one blank note
+            tambahCatatan();
+        }
+    }
+
+    // Initialize the form with one blank note when the page loads
+    document.addEventListener('DOMContentLoaded', () => {
+        cekKegiatan();
+    });
