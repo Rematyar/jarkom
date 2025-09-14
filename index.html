@@ -128,21 +128,18 @@
   <label>Tempat</label>
   <input type="text" id="tempat" value="Masjid Miftahul Jannah">
 
-  <label>Kegiatan</label>
+  <label for="kegiatan">Kegiatan</label>
   <select id="kegiatan" onchange="cekKegiatan()">
-    <option value="Ngabar">Ngabar</option>
-    <option value="Mentoring Ikhwan bersama Kak Arya">Mentoring Ikhwan bersama Kak Arya</option>
-    <option value="Mentoring Akhwat bersama Teh Astrid">Mentoring Akhwat bersama Teh Astrid</option>
-    <option value="custom">Custom</option>
+      <option value="Ngabar">Ngabar</option>
+      <option value="Mentoring Ikhwan bersama Kak Arya">Mentoring Ikhwan bersama Kak Arya</option>
+      <option value="Mentoring Akhwat bersama Teh Astrid">Mentoring Akhwat bersama Teh Astrid</option>
+      <option value="custom">Custom</option>
   </select>
   <input type="text" id="kegiatanCustom" placeholder="Tulis kegiatan sendiri" style="display:none; margin-top:5px;">
 
-  <div id="catatan-container">
-    <label>Catatan 1</label>
-    <input type="text" class="catatan">
-  </div>
+   <div id="catatan-container">
+      </div>
   <button type="button" onclick="tambahCatatan()">+ Tambah Catatan</button>
-
   <br>
   <button onclick="generate()">Buat Jarkom</button>
 
@@ -152,6 +149,7 @@
   <script src="script.js"></script>
 </body>
 </html>
+
 
 
 
