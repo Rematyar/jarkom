@@ -104,67 +104,71 @@ const toggleBtn = document.getElementById("mode-toggle");
       }
     });
 
-const catatanContainer = document.getElementById('catatan-container');
-    let catatanCount = 0; // To keep track of the number of notes
+// Get the main container for note fields
+    const catatanContainer = document.getElementById('catatan-container');
+    // A counter to keep track of the number of notes for labeling
+    let catatanCount = 0;
 
-    // Function to add a new note field
+    /**
+     * Function to add a new note field.
+     * @param {string} defaultValue - The default text to put in the input field.
+     */
     function tambahCatatan(defaultValue = '') {
-        catatanCount++;
-        
-        const newCatatanDiv = document.createElement('div');
-        newCatatanDiv.id = `catatan-group-${catatanCount}`;
-        newCatatanDiv.style.marginTop = '10px';
+        catatanCount++; // Increment the counter
 
+        // Create a new div to hold the label and input
+        const newCatatanGroup = document.createElement('div');
+        
+        // Create the label for the new note
         const newLabel = document.createElement('label');
         newLabel.textContent = `Catatan ${catatanCount}`;
 
+        // Create the new text input field
         const newInput = document.createElement('input');
         newInput.type = 'text';
         newInput.className = 'catatan';
         newInput.value = defaultValue; // Set the default value if provided
 
-        newCatatanDiv.appendChild(newLabel);
-        newCatatanDiv.appendChild(newInput);
-        catatanContainer.appendChild(newCatatanDiv);
+        // Append the label and input to the new div
+        newCatatanGroup.appendChild(newLabel);
+        newCatatanGroup.appendChild(newInput);
+
+        // Append the new group to the main container
+        catatanContainer.appendChild(newCatatanGroup);
     }
     
-    // Function to handle the logic when the dropdown selection changes
+    /**
+     * This function runs whenever the dropdown selection changes.
+     * It handles the core logic for showing/hiding fields and adding notes.
+     */
     function cekKegiatan() {
         const kegiatanSelect = document.getElementById('kegiatan');
         const customInput = document.getElementById('kegiatanCustom');
         const selectedValue = kegiatanSelect.value;
         
-        // Handle the visibility of the custom input field
-        if (selectedValue === 'custom') {
-            customInput.style.display = 'block';
-        } else {
-            customInput.style.display = 'none';
-        }
+        // Show or hide the custom input field based on selection
+        customInput.style.display = (selectedValue === 'custom') ? 'block' : 'none';
         
-        // Reset the notes for a clean slate on every change
+        // --- CORE LOGIC ---
+        // Clear all existing note fields to start fresh
         catatanContainer.innerHTML = '';
         catatanCount = 0;
         
-        // --- CORE LOGIC ---
         if (selectedValue === 'Mentoring Ikhwan bersama Kak Arya') {
-            // Add the first note with a predefined value
-            tambahCatatan("Jangan lupa bawa catatan dan alat tulis");
-            
-            // Add a second, blank note
+            // Add the first note with predefined text
+            tambahCatatan("Jangan lupa bawa catatan dan alat tulis.");
+            // Add a second, blank note field
             tambahCatatan();
-        } 
-        // Example for another option
-        else if (selectedValue === 'Mentoring Akhwat bersama Teh Astrid') {
-            // Add a predefined note for this option
-            tambahCatatan("Diharapkan datang tepat waktu");
-        }
-        else {
+        } else if (selectedValue === 'Mentoring Akhwat bersama Teh Astrid') {
+            // Example for another option
+            tambahCatatan("Diharapkan hadir tepat waktu.");
+            tambahCatatan();
+        } else {
             // For any other option (like Ngabar or Custom), just add one blank note
             tambahCatatan();
         }
     }
 
-    // Initialize the form with one blank note when the page loads
-    document.addEventListener('DOMContentLoaded', () => {
-        cekKegiatan();
-    });
+    // Run the cekKegiatan function once when the page loads
+    // to set up the initial state for the default selected option.
+    document.addEventListener('DOMContentLoaded', cekKegiatan);
