@@ -1,165 +1,184 @@
 <!DOCTYPE html>
-<html lang="id">
+<html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="device-width, initial-scale=1.0">
-  <title>Template Jarkom</title>
-  <style>
-    body {
-      font-family: Arial, sans-serif;
-      width: 90%
-      max-width: 800px;
-      margin: 20px auto;
-      padding: 20px;
-      border: 1px solid #ddd;
-      border-radius: 10px;
-      background: #f9f9f9;
-      transition: 0,3s;
-      
-    }
-    label {
-      font-weight: bold;
-      display: block;
-      margin-top: 10px;
-    }
-    input, select {
-      width: 100%;
-      padding: 8px;
-      margin-top: 4px;
-      border: 1px solid #ccc;
-      border-radius: 5px;
-    }
-    button {
-      margin-top: 15px;
-      padding: 10px 15px;
-      border: none;
-      border-radius: 5px;
-      background: #007bff;
-      color: white;
-      font-size: 16px;
-      cursor: pointer;
-    }
-    button:hover {
-      background: #0056b3;
-    }
-    pre {
-      background: white;
-      padding: 15px;
-      border-radius: 10px;
-      margin-top: 20px;
-      white-space: pre-wrap;
-    }
-    #mode-toggle {
-      position: fixed;
-      top: 15px;
-      right: 15px;
-      padding: 8px 12px;
-      font-size: 14px;
-      border-radius: 20px;
-      cursor: pointer;
-      border: none;
-      background: #333;
-      color: white;
-      transition: 0.3s;
-    }
-    /* Dark mode */
-    .dark-mode {
-      background: #121212;
-      color: white;
-      border-color: #444;
-    }
-    .dark-mode input,
-    .dark-mode select {
-      background: #1e1e1e;
-      color: white;
-      border: 1px solid #555;
-    }
-    .dark-mode pre {
-      background: #1e1e1e;
-      color: #ddd;
-    }
-    .dark-mode button {
-      background: #007bff;
-      color: white;
-    }
-    .dark-mode #mode-toggle {
-      background: #ddd;
-      color: black;
-    }
-    @media *max-width: 600px) {
-    body {
-      width: 95%;
-      padding: 15px;
-    }
-    input, select, button {
-      font-size: 16px;
-      padding: 10px;
-    }
-    #mode-toggle {
-      padding: 6px 10px;
-      font-size: 12px;
-    }
-  }
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kimia Kelompok Jumat</title>
+    <!-- Tailwind CSS for styling -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Fonts: Inter -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        /* Custom styles for the app */
+        body {
+            font-family: 'Inter', sans-serif;
+            -webkit-tap-highlight-color: transparent; /* Removes blue tap highlight on mobile */
+        }
+        /* Style for the overlay to ensure smooth transitions */
+        #question-overlay {
+            transition: opacity 0.3s ease-in-out;
+        }
+        /* Style for the card within the overlay for a subtle scale-up effect */
+        #question-card {
+            transition: transform 0.3s ease-in-out;
+        }
+        /* When the overlay is active, scale up the card */
+        #question-overlay.opacity-100 #question-card {
+            transform: scale(1);
+        }
+    </style>
 </head>
-<body>
-  <button id="mode-toggle">🌙 Dark</button>
-  <h2>📢 Template Jarkom 📢</h2>
-  
-  <label>Waktu salam (pagi/siang/malam)</label>
-  <select id="salam">
-    <option value="pagi">Pagi</option>
-    <option value="siang">Siang</option>
-    <option value="malam">Malam</option>
-  </select>
+<body class="bg-slate-900 text-white min-h-screen flex flex-col items-center justify-center p-4">
 
-  <label>Keterangan hari (hari ini/besok)</label>
-  <select id="keterangan">
-    <option value="hari ini">Hari ini</option>
-    <option value="besok">Besok</option>
-  </select>
+    <!-- Header Content -->
+    <header class="text-center mb-4">
+        <h1 class="text-3xl md:text-4xl font-bold text-cyan-400">Kimia Kelompok Jumat</h1>
+        <p class="text-slate-400 mt-2">Click a card to reveal a question.</p>
+    </header>
 
-  <label>Hari & Tanggal</label>
-  <input type="date" id="tanggal">
+    <!-- Main Content Wrapper -->
+    <div class="max-w-2xl w-full mx-auto">
+        <!-- Category Titles -->
+        <div id="category-titles" class="grid grid-cols-4 gap-3 md:gap-4 mb-2">
+            <h2 class="text-center text-xs sm:text-sm font-semibold text-slate-300">Logam Alkali</h2>
+            <h2 class="text-center text-xs sm:text-sm font-semibold text-slate-300">Logam Alkali Tanah</h2>
+            <h2 class="text-center text-xs sm:text-sm font-semibold text-slate-300">Halogen</h2>
+            <h2 class="text-center text-xs sm:text-sm font-semibold text-slate-300">Gas Mulia</h2>
+        </div>
 
-  <label>Waktu</label>
-  <input type="text" id="waktu" value="15.00 s/d selesai">
-
-  <label>Tempat</label>
-  <input type="text" id="tempat" value="Masjid Miftahul Jannah">
-
-  <label for="kegiatan">Kegiatan</label>
-        <select id="kegiatan" onchange="cekKegiatan()">
-            <option value="Ngabar">Ngabar</option>
-            <option value="Mentoring Ikhwan bersama Kak Arya">Mentoring Ikhwan bersama Kak Arya</option>
-            <option value="Mentoring Akhwat bersama Teh Astrid">Mentoring Akhwat bersama Teh Astrid</option>
-            <option value="custom">Custom</option>
-        </select>
-        <input type="text" id="kegiatanCustom" placeholder="Tulis kegiatan sendiri" style="display:none;">
+        <!-- 4x4 Grid Container -->
+        <main id="grid-container" class="grid grid-cols-4 gap-3 md:gap-4">
+            <!-- Cards will be dynamically generated by JavaScript -->
+        </main>
     </div>
 
-    <div id="catatan-container">
-        <!-- Fields for notes will be generated by JavaScript here -->
+    <!-- Full-screen Overlay for displaying the question -->
+    <div id="question-overlay" class="fixed inset-0 bg-black bg-opacity-80 flex items-center justify-center p-4 opacity-0 pointer-events-none z-50">
+        <!-- Close Button (Top Right) -->
+        <button id="close-button" class="absolute top-6 right-6 text-white text-5xl font-bold hover:text-cyan-400 transition-colors duration-200 z-20">&times;</button>
+        
+        <!-- Question Card -->
+        <div id="question-card" class="bg-slate-800 rounded-2xl shadow-2xl p-8 md:p-12 w-full max-w-3xl relative transform scale-95">
+            <div class="text-center">
+                <p id="question-points" class="text-xl font-semibold text-cyan-400 mb-4">Points</p>
+                <h2 id="question-text" class="text-2xl md:text-4xl font-bold leading-tight">Question text will appear here.</h2>
+            </div>
+        </div>
     </div>
-    
-    <button type="button" onclick="tambahCatatan()">+ Tambah Catatan</button>
-</div>
-  <br>
-  <button onclick="generate()">Buat Jarkom</button>
 
-  <pre id="output"></pre>
-  <button id="copyBtn" style="display:none;" onclick="copyText()">Copy ke Clipboard</button>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            // --- DATA ---
+            const pointsConfig = [1, 3, 5, 10];
+            const questions = [
+                // Logam Alkali
+                "Sebutkan unsur pertama dalam golongan Logam Alkali.",
+                "Apa warna nyala api Natrium (Na)?",
+                "Manakah logam alkali yang paling reaktif?",
+                "Apa produk dari reaksi logam alkali dengan air?",
+                // Logam Alkali Tanah
+                "Unsur apa di Logam Alkali Tanah yang penting untuk tulang?",
+                "Apa nama umum untuk Kalsium Sulfat (CaSO₄)?",
+                "Apa kegunaan Magnesium (Mg) dalam kembang api?",
+                "Mengapa unsur-unsur ini disebut 'alkali tanah'?",
+                // Halogen
+                "Manakah halogen yang berwujud gas pada suhu kamar?",
+                "Apa kegunaan utama Klorin (Cl)?",
+                "Unsur halogen manakah yang paling elektronegatif?",
+                "Apa nama senyawa yang terbentuk dari logam dan halogen?",
+                // Gas Mulia
+                "Mengapa Gas Mulia sangat tidak reaktif?",
+                "Gas mulia manakah yang paling melimpah di atmosfer?",
+                "Apa kegunaan Helium (He) yang paling terkenal?",
+                "Gas mulia manakah yang digunakan dalam lampu kilat kamera?"
+            ];
+            const categories = ["Logam Alkali", "Logam Alkali Tanah", "Halogen", "Gas Mulia"];
 
-  <script src="script.js"></script>
+
+            // --- DOM ELEMENTS ---
+            const gridContainer = document.getElementById('grid-container');
+            const overlay = document.getElementById('question-overlay');
+            const closeButton = document.getElementById('close-button');
+            const questionText = document.getElementById('question-text');
+            const questionPoints = document.getElementById('question-points');
+
+            // --- FUNCTIONS ---
+            
+            /**
+             * Generates the 16 cards and adds them to the grid.
+             */
+            function setupGrid() {
+                let cardIndex = 0;
+                pointsConfig.forEach(points => {
+                    for (let i = 0; i < 4; i++) {
+                        const card = document.createElement('div');
+                        card.className = 'bg-slate-800 rounded-lg flex items-center justify-center h-24 md:h-32 cursor-pointer transition-transform duration-200 hover:scale-105 hover:bg-slate-700';
+                        card.dataset.index = cardIndex;
+                        card.dataset.categoryIndex = i; // Store which column it belongs to
+                        
+                        const pointsDisplay = document.createElement('span');
+                        pointsDisplay.className = 'text-3xl md:text-4xl font-extrabold text-cyan-500';
+                        pointsDisplay.textContent = points;
+                        
+                        card.appendChild(pointsDisplay);
+                        gridContainer.appendChild(card);
+                        
+                        // Add event listener to each card
+                        card.addEventListener('click', () => {
+                            const categoryIndex = parseInt(card.dataset.categoryIndex);
+                            const currentQuestionIndex = (pointsConfig.indexOf(points) * 4) + categoryIndex;
+                            handleCardClick(currentQuestionIndex, points, categories[categoryIndex]);
+                        });
+                        cardIndex++;
+                    }
+                });
+            }
+
+            /**
+             * Handles the logic when a card is clicked.
+             * @param {number} index - The index of the clicked card (0-15).
+             * @param {number} points - The point value of the card.
+             * @param {string} category - The category of the question.
+             */
+            function handleCardClick(index, points, category) {
+                // Set the content for the overlay
+                questionText.textContent = questions[index] || "No question found for this card.";
+                questionPoints.textContent = `${category} - ${points} Poin`;
+                
+                // Show the overlay with a smooth transition
+                overlay.classList.remove('opacity-0', 'pointer-events-none');
+                overlay.classList.add('opacity-100');
+            }
+
+            /**
+             * Hides the question overlay.
+             */
+            function closeOverlay() {
+                overlay.classList.add('opacity-0', 'pointer-events-none');
+                overlay.classList.remove('opacity-100');
+            }
+
+            // --- INITIALIZATION ---
+            setupGrid();
+
+            // --- EVENT LISTENERS for closing the overlay ---
+            closeButton.addEventListener('click', closeOverlay);
+            // Optional: Close overlay if user clicks the dark background area
+            overlay.addEventListener('click', (event) => {
+                if (event.target === overlay) {
+                    closeOverlay();
+                }
+            });
+             // Close overlay with the 'Escape' key
+            document.addEventListener('keydown', (event) => {
+                if (event.key === 'Escape') {
+                    closeOverlay();
+                }
+            });
+        });
+    </script>
 </body>
 </html>
-
-
-
-
-
-
-
-
-
 
